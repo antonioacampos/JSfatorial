@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: burlywood;
+        }
+        h1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: serif;
+            color: white;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            font-family: serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de fatoriais</h1><br>
+    <div class="container">
+    
+    <button id="start" style="display: block;">Iniciar código</button>
+    <div id="fatorial" style="display: none;">
+        <form action="">
+            <input type="number" id="meuInput"> <!--Input do número-->
+            <button type="button" onclick="calcularFatorial()">Calcular Fatorial</button> <!--Botão que chama a função-->
+            
+            <p id="valorParcial"></p> <!--Onde serão exibidos os fatoriais-->
+            <p id="valorFinal"></p> <!--Onde será exibido o fatorial final-->
+        </form>
+    </div>
+    </div>
+    <script>
+    document.getElementById("start").addEventListener("click", function() { //adiciona um event listener para o botão quando é clicado
+        document.getElementById("fatorial").style.display = "block" //define que, quando o botão é clicado, a div fatorial vira display block
+        document.getElementById("start").style.display = "none" // define que o botão de começar desapareça após ser clicado
+    })
+    function calcularFatorial() {
+        var inputElement = document.getElementById("meuInput") //Pega o valor do input e atribui a uma variável
+        var intermediariosElement = document.getElementById("valorParcial") //Pega o "campo" que será exibido e atribui a uma variável
+        var resultadoElement = document.getElementById("valorFinal") //Pega o "campo" que será exibido e atribui a uma variável
+
+        var valor = parseInt(inputElement.value) //Transforma o valor em int e atribui a outra variável
+        
+        var numeros = Array.from({length: valor}, (_, index) => index + 1)//declara o array com Valor elementos e indo de 1 em 1, começando em 1
+        var intermediarios = [] //declara o array que vai guardar os fatoriais no meio do processo
+        var fatorial = numeros.reduce((acumulador, numero) => { //Define a função reduce, recebendo acumulador e numero
+            acumulador *= numero, //Aumenta o acumulador multiplicando ele pelo numero, que é incrementado de 1 em 1
+            intermediarios.push("Fatorial de " + numero + " é: " + acumulador)//imprime os fatoriais "intermediários"
+            return acumulador//retorna o acumulador final para a variável "fatorial"
+        }, 1)
+        intermediariosElement.innerHTML = intermediarios.join("<br>")//Quebra linha entre os fatoriais "intermediários"
+        resultadoElement.textContent = "O fatorial de " + valor + " é: " + fatorial //imprime o fatorial final
+    }
+    </script>
+</body>
+</html>
